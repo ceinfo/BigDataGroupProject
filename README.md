@@ -10,7 +10,7 @@ Our project analyzes NYC Crime Data from 2006 - 2015.  The source code available
 
 These instructions will get you setup and running with the project on your local machine for development and testing.  
 
-1) Download the NYPD_Complaint_Data_Historic.csv dataSet:  
+1) Download the NYPD_Complaint_Data_Historic.csv dataset:  
   https://data.cityofnewyork.us/api/views/qgea-i56i/rows.csv?accessType=DOWNLOAD
   
 2) Download the code from this repository and place onto Hadoop cluster (ex:  dumbo)
