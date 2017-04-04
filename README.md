@@ -8,7 +8,7 @@ Our project analyzes NYC Crime Data from 2006 - 2015.  The source code available
 
 ## Getting Started
 
-These instructions will get you up and running with the project on your local machine for development and testing.
+These instructions will get you setup and running with the project on your local machine for development and testing purposes.  
 
 1) Download "NYPD_Complaint_Data_Historic.csv" DataSet:  
   https://data.cityofnewyork.us/api/views/qgea-i56i/rows.csv?accessType=DOWNLOAD
