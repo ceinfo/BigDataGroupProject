@@ -17,6 +17,8 @@ These instructions will get you setup and running with the project on your local
 
 3) Run ./test.sh NYPD_Complaint_Data_Historic.csv
 
+4) View ./src/output
+
 
 ## Directory Structure
 ```
