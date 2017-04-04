@@ -119,7 +119,7 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
     - NULL:count - the number of empty string records
     - INVALID:datatype,semantic - if there are inconsistencies and multiple datatypes/semantics are found
     
-  Note:  If no data, then the field is omitted. 
+  Note:  If no data is available, then the field is omitted. 
   
   The format:
   index,Validity:   [VALID:Count| ...]
