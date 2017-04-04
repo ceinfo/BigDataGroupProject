@@ -147,4 +147,4 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
  23,Validity:   | VALID:3189168| NULL:117333                                                             
 ```
 
-
+Thanks!
