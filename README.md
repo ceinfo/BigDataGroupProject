@@ -78,7 +78,7 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
 #### - Section 2: Semantics
 ```
   Analysis on the possible semantic matches.  The possible semantics 
-  validated are:  phone, addres, zipcode, state, latitude coords, longitude coords, 
+  validated are:  phone, address, zipcode, state, latitude coords, longitude coords, 
   and email.
     
   The format:
