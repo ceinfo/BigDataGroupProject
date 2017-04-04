@@ -117,7 +117,7 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
   Analysis on the validity of the data.  The fields represented:
     - VALID:count - the number of valid records
     - NULL:count - the number of empty string records
-    - INVALID:datatype, semantic - if there are inconsistencies and multiple datatypes/semantics are found
+    - INVALID:datatype,semantic - if there are inconsistencies and multiple datatypes/semantics are found
     
   Note:  If no data, then the field is omitted. 
   
