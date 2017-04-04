@@ -43,7 +43,7 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
     time, and string.  
     
     The format:
-    index,Datatypes:   [LikelyDatatype: Counter] ===> [CheckedDatatype: DatatypeCount, ...]
+    index,Datatypes:   [LikelyDatatype: Count] ===> [CheckedDatatype: DatatypeCount, ...]
     
    
 ```
@@ -82,7 +82,7 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
   and email.
     
   The format:
-  index,Semantics:   [MatchedSemantic: Counter, ...]
+  index,Semantics:   [MatchedSemantic: Count, ...]
 ```
  
 ```
@@ -122,7 +122,7 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
   Note:  If no data, then the field is omitted. 
   
   The format:
-  index,Validity:   [VALID: Counter, ...]
+  index,Validity:   [VALID:Count, ...]
 ```
 ```
  0,Validity:    | VALID:3306502
