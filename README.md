@@ -23,6 +23,7 @@ These instructions will get you a copy of the project up and running on your loc
   src       (src and output directory)
   |_____ map.py     (map job)
   |_____ reduce.py  (reduce job)
+  |_____ srctmp.out (intermediary hadoop output file, ignored)
   |_____ output     (consolidated output file)
        
 ```
