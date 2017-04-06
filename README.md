@@ -15,7 +15,12 @@ These instructions will get you setup and running with the project on your local
   
 2) Download the code from this repository and place onto Hadoop cluster (ex:  dumbo)
 
-3) Run ./test.sh NYPD_Complaint_Data_Historic.csv
+3) Execute the Map/Reduce scripts by running any 3 possible commands below:
+```
+     a) ./test.sh NYPD_Complaint_Data_Historic.csv        (analyzes all columns)
+     b) ./test.sh NYPD_Complaint_Data_Historic.csv #      (analyzes specific column # given; # range begins from 0)
+     c) ./test.sh NYPD_Complaint_Data_Historic.csv #,#,#  (analyzes only columns specified)
+```
 
 4) View ./src/output
 
