@@ -17,6 +17,8 @@ counter = {}
 semantic = {}
 valid = {}
 column_iterator = []
+found_regex = {}
+found_datetime = {}
 found_entry_list = []
 found_entry_len = 0
 
@@ -144,14 +146,25 @@ def check_datetime(value):
 
 
 def check_datatype(value, inindex):
+  temp = {}
   index = str(inindex)
+
   if index not in counter:
     counter[index] = {}
 
+  if value in found_regex and len(counter[index]) > 0:
+    for k in found_regex[value].keys():
+        if k not in counter[index]:
+          counter[index][k] = found_regex[value][k]
+        else:
+          counter[index][k] = sum( [ counter[index][k], found_regex[value][k] ])
+    return
+  
   for elem in list_datatypes:
     x = str(elem)
     if x not in counter[index]:
       counter[index][x] = 0
+
 
   try:
     # Is formatted as a decimal
@@ -160,6 +173,7 @@ def check_datatype(value, inindex):
 
     float(value).is_integer()
     counter[index][DECIMAL] += 1
+    temp[DECIMAL] = 1
   except (AttributeError, ValueError) as err:
     for x in list_datatypes[1:]:
       usevalue = ""
@@ -185,13 +199,19 @@ def check_datatype(value, inindex):
 
           if usevalue != "" and isinstance(usevalue, usetype):
             counter[index][n_type] += 1
+            temp[n_type] = 1
         elif x == DATETIME:
           # Work on the dates
-          d_type = check_datetime(value)
+          if value in found_datetime:
+            d_type = found_datetime[value]
+          else:
+            d_type = check_datetime(value)
           if d_type:
             if d_type not in counter[index]:
               counter[index][d_type] = 0
             counter[index][d_type] += 1
+            temp[d_type] = 1
+            found_datetime[value] = d_type
 
         ## At last element, check to see if nothing was available then add as a string
         ## Add a check to exclude empty values from the calcs
@@ -199,8 +219,12 @@ def check_datatype(value, inindex):
           if STRING not in counter[index]:
             counter[index][STRING] = 0
           counter[index][STRING] += 1
+          temp[STRING] = 1
       except ValueError:
         pass
+
+  # Add as our last step
+  found_regex[value] = temp
 
 
 
@@ -241,20 +265,6 @@ def print_datatypes(desc, mapper):
   mapper = OrderedDict(sorted(mapper.items(), key=lambda k:int(k[0]), reverse=False))
   for x in mapper.keys():
     tempdesc = OrderedDict(sorted(mapper[x].items(), key=lambda k:k[1], reverse=True))
-    
-    keys = tempdesc.keys()
-    maxfound = tempdesc[keys[0]]
-    maxindex = keys[0]
-
-    """
-    if keys[0] == STRING:
-      for keyr in xrange(1, len(keys)):
-        newkey = keys[keyr]
-        if tempdesc[newkey] >= maxfound:
-          maxfound = tempdesc[newkey]
-          maxindex = keys[keyr]
-    print " %s[%s]:\t%s: %s" % (desc, x, maxindex.upper(), tempdesc[maxindex])
-    """
     print " %s\t%s,%s" % (x, desc, mapper[x])
    
 
