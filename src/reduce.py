@@ -26,7 +26,7 @@ STRING = "string"
 DATETIME = "datetime"
 DATE = "date"
 TIME = "time"
-list_datatypes = [DECIMAL, INTEGER, LONG, STRING, DATETIME]
+list_datatypes = [DECIMAL, INTEGER, LONG, DATETIME]
 
 EMAIL = "email"
 PHONE = "phone"
@@ -156,7 +156,7 @@ def check_datatype(value, inindex):
       n_type = ""
       d_type = ""
       try:
-        if x in [INTEGER, LONG, STRING]:
+        if x in [INTEGER, LONG]:
           if x == INTEGER:
             usetype = int
             try:
