@@ -45,26 +45,33 @@ def parseData(line):
     except:
         pass
 
+def removeNone(entry):
+    if entry:
+        return True
+    else:
+        return False
+
+
 def compareDate(cfd, ctd, rd):
     rule = [False]*5
     
-    if cfd == '' & ctd != '':
+    if (cfd == '') & (ctd != ''):
         rule[2] = True
     
     elif cfd != '':
-        cfd2 = dt.strptime(cfd, "%m/%d/%y")
+        cfd2 = dt.strptime(cfd, "%m/%d/%Y")
         if ctd != '':
-            ctd2 = dt.strptime(ctd, "%m/%d/%y")
+            ctd2 = dt.strptime(ctd, "%m/%d/%Y")
             if ctd2 < cfd2:
                 rule[0] = True
             if (ctd2 - cfd2).days > 5:
-                rule[4] = True
+                rule[3] = True
         if rd != '':
-            rd2 = dt.strptime(rd, "%m/%d/%y")
+            rd2 = dt.strptime(rd, "%m/%d/%Y")
             if rd2 < cfd2:
                 rule[1] = True
             if (rd2 - cfd2).days > 5:
-                rule[5] = True
+                rule[4] = True
     return rule
 
 def addRules(entry):
@@ -81,7 +88,7 @@ def keyPair(entry, k1, k2, delim):
 
 def parseKeyPair(pair, delim):
     Key1, Key2 = pair[0].split(delim, 1)
-    return ','.join([Key1, Key2, pair[1]])
+    return [Key1, Key2, int(pair[1])]
 
     
 if __name__ == '__main__':
@@ -90,30 +97,32 @@ if __name__ == '__main__':
     log4j.LogManager.getRootLogger().setLevel(log4j.Level.ERROR)
 
     lines = sc.textFile(sys.argv[1], 1)
-    lines = lines.map(lambda x: parseData(x))
+    lines = lines.map(lambda x: parseData(x)).filter(lambda x: removeNone(x))
     
     # A: Output records with suspicious dates values
     lines_out = lines.map(lambda x: addRules(x)).filter(lambda x: any(x[-5:]))
-    lines_out = lines_out.map(lambda x: ','.join(x))
+    lines_out = lines_out.map(lambda x: '\t'.join([str(i) for i in x]))
     lines_out.saveAsTextFile('crime_dataCheck.out')
     print 'Date check finished'
     
+    
     # B: Daily number of crimes
-    cntByDay = lines.map(lambda x: countByDay(x)).reduceByKey(lambda x,y: x+y, numTasks = 2).collect().sortBy(lambda x: x[1], False).take(10)
+    cntByDay = lines.map(lambda x: countByDay(x)).reduceByKey(lambda x,y: x+y).sortBy(lambda x: x[1], False).take(10)
     sc.parallelize(cntByDay).saveAsTextFile('cntByDay.out')
     print 'Daily number calculated'
     
     # C: Cross-tab of KY_CD and PD_CD
-    KYPD = lines.map(lambda x: keyPair(x, 6, 8, '_')).reduceByKey(lambda x,y: x+y, numTasks = 2).collect()
-    sc.parallelize(KYPD).map(lambda x: parseKeyPair(x, '_')).sortBy(lambda x: (x[0], -x[2]))
-    KYPD.saveAsTextFile('KYPD_tab.out')
+    KYPD = lines.map(lambda x: keyPair(x, 6, 8, '\t')).reduceByKey(lambda x,y: x+y, 2).collect()
+    KYPD = sc.parallelize(KYPD).map(lambda x: parseKeyPair(x, '\t')).sortBy(lambda x: (x[0], -x[2]))
+    KYPD.map(lambda x: '\t'.join([str(i) for i in x])).saveAsTextFile('KYPD_tab.out')
     print 'KYPD generated'
     
     # D: Cross-tab of KY_CD and OFNS_DESC
-    KYDesp = lines.map(lambda x: keyPair(x, 6, 7, '_')).reduceByKey(lambda x,y: x+y, numTasks = 2).collect()
-    sc.parallelize(KYDesp).map(lambda x: parseKeyPair(x, '_')).sortBy(lambda x: (x[0], -x[2]))
-    KYDesp.saveAsTextFile('KYDesp_tab.out')
+    KYDesp = lines.map(lambda x: keyPair(x, 6, 7, '\t')).reduceByKey(lambda x,y: x+y, 2).collect()
+    KYDesp = sc.parallelize(KYDesp).map(lambda x: parseKeyPair(x, '\t')).sortBy(lambda x: (x[0], -x[2]))
+    KYDesp.map(lambda x: '\t'.join([str(i) for i in x])).saveAsTextFile('KYDesp_tab.out')
     print 'KYDesp generated'
+    
    
     sc.stop()
     
