@@ -52,31 +52,30 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
     
    
 ```
- 0,Datatypes:   INTEGER: 3306502 ===> ([('integer', 3306502), ('string', 3306502), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 1,Datatypes:   DATE: 3306204 ===> ([('string', 3306204), ('date', 3306204), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 2,Datatypes:   TIME: 3306434 ===> ([('string', 3306491), ('time', 3306434), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 3,Datatypes:   DATE: 2504763 ===> ([('string', 2504763), ('date', 2504763), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 4,Datatypes:   TIME: 2505950 ===> ([('string', 2506035), ('time', 2505950), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 5,Datatypes:   DATE: 3306502 ===> ([('string', 3306502), ('date', 3306502), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 6,Datatypes:   INTEGER: 3306502 ===> ([('integer', 3306502), ('string', 3306502), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 7,Datatypes:   STRING: 3295888 ===> ([('string', 3295888), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 8,Datatypes:   INTEGER: 3303692 ===> ([('integer', 3303692), ('string', 3303692), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 9,Datatypes:   STRING: 3303692 ===> ([('string', 3303692), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 10,Datatypes:  STRING: 3306498 ===> ([('string', 3306498), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 11,Datatypes:  STRING: 3306502 ===> ([('string', 3306502), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 12,Datatypes:  STRING: 3306502 ===> ([('string', 3306502), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 13,Datatypes:  STRING: 3306428 ===> ([('string', 3306428), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 14,Datatypes:  INTEGER: 3306501 ===> ([('integer', 3306501), ('string', 3306501), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 15,Datatypes:  STRING: 2581201 ===> ([('string', 2581201), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 16,Datatypes:  STRING: 3291891 ===> ([('string', 3291891), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+0,Datatypes:   INTEGER: 5101231 ===> ([('integer', 5101231), ('string', 5101231), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 1,Datatypes:   DATE: 5100576 ===> ([('string', 5100576), ('date', 5100576), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 2,Datatypes:   TIME: 5100280 ===> ([('string', 5101183), ('time', 5100280), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 3,Datatypes:   DATE: 3709753 ===> ([('string', 3709753), ('date', 3709753), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 4,Datatypes:   TIME: 3712070 ===> ([('string', 3713446), ('time', 3712070), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 5,Datatypes:   DATE: 5101231 ===> ([('string', 5101231), ('date', 5101231), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 6,Datatypes:   INTEGER: 5101231 ===> ([('integer', 5101231), ('string', 5101231), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 7,Datatypes:   STRING: 5082391 ===> ([('string', 5082391), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 8,Datatypes:   INTEGER: 5096657 ===> ([('integer', 5096657), ('string', 5096657), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 9,Datatypes:   STRING: 5096657 ===> ([('string', 5096657), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 10,Datatypes:  STRING: 5101224 ===> ([('string', 5101224), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 11,Datatypes:  STRING: 5101231 ===> ([('string', 5101231), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 12,Datatypes:  STRING: 5101231 ===> ([('string', 5101231), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 13,Datatypes:  STRING: 5100768 ===> ([('string', 5100768), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 14,Datatypes:  INTEGER: 5100841 ===> ([('integer', 5100841), ('string', 5100841), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 15,Datatypes:  STRING: 3974103 ===> ([('string', 3974103), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 16,Datatypes:  STRING: 5067952 ===> ([('string', 5067952), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
  17,Datatypes:  STRING: 7599 ===> ([('string', 7599), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 18,Datatypes:  STRING: 166259 ===> ([('string', 166259), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 19,Datatypes:  INTEGER: 3189168 ===> ([('integer', 3189168), ('string', 3189168), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 20,Datatypes:  INTEGER: 3189168 ===> ([('integer', 3189168), ('string', 3189168), ('decimal', 0), ('long', 0), ('datetime', 0)])
- 21,Datatypes:  DECIMAL: 3189168 ===> ([('decimal', 3189168), ('integer', 0), ('string', 0), ('long', 0), ('datetime', 0)])
- 22,Datatypes:  DECIMAL: 3189168 ===> ([('decimal', 3189168), ('integer', 0), ('string', 0), ('long', 0), ('datetime', 0)])
- 23,Datatypes:  STRING: 3189168 ===> ([('string', 3189168), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
-
+ 18,Datatypes:  STRING: 253205 ===> ([('string', 253205), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 19,Datatypes:  INTEGER: 4913085 ===> ([('integer', 4913085), ('string', 4913085), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 20,Datatypes:  INTEGER: 4913085 ===> ([('integer', 4913085), ('string', 4913085), ('decimal', 0), ('long', 0), ('datetime', 0)])
+ 21,Datatypes:  DECIMAL: 4913085 ===> ([('decimal', 4913085), ('integer', 0), ('long', 0), ('datetime', 0)])
+ 22,Datatypes:  DECIMAL: 4913085 ===> ([('decimal', 4913085), ('integer', 0), ('long', 0), ('datetime', 0)])
+ 23,Datatypes:  STRING: 4913085 ===> ([('string', 4913085), ('integer', 0), ('decimal', 0), ('long', 0), ('datetime', 0)])
 ```
 
  
@@ -109,11 +108,11 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
  15,Semantics:  ()
  16,Semantics:  ()
  17,Semantics:  ()
- 18,Semantics:  ([('address', 1157)])
+ 18,Semantics:  ([('address', 1989)])
  19,Semantics:  ()
  20,Semantics:  ()
- 21,Semantics:  ([('latitude', 3189168), ('longitude', 3189168)])
- 22,Semantics:  ([('latitude', 3189168), ('longitude', 3189168)])
+ 21,Semantics:  ([('latitude', 4913085), ('longitude', 4913085)])
+ 22,Semantics:  ([('latitude', 4913085), ('longitude', 4913085)])
  23,Semantics:  ()
 ```
 
@@ -130,30 +129,30 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
   index,Validity:   [VALID:Count| ...]
 ```
 ```
- 0,Validity:    | VALID:3306502
- 1,Validity:    | VALID:3306204| NULL:298
- 2,Validity:    | VALID:3306491| NULL:11
- 3,Validity:    | VALID:2504763| NULL:801739
- 4,Validity:    | VALID:2506035| NULL:800467
- 5,Validity:    | VALID:3306502
- 6,Validity:    | VALID:3306502
- 7,Validity:    | VALID:3295888| NULL:10614
- 8,Validity:    | VALID:3303692| NULL:2810
- 9,Validity:    | VALID:3303692| NULL:2810
- 10,Validity:   | VALID:3306498| NULL:4
- 11,Validity:   | VALID:3306502
- 12,Validity:   | VALID:3306502
- 13,Validity:   | VALID:3306428| NULL:74
- 14,Validity:   | VALID:3306501| NULL:1
- 15,Validity:   | VALID:2581201| NULL:725301
- 16,Validity:   | VALID:3291891| NULL:14611
- 17,Validity:   | VALID:7599| NULL:3298902
- 18,Validity:   | VALID:166259| NULL:3140242
- 19,Validity:   | VALID:3189168| NULL:117333
- 20,Validity:   | VALID:3189168| NULL:117333
- 21,Validity:   | VALID:3189168| NULL:117333| INVALID:semantic
- 22,Validity:   | VALID:3189168| NULL:117333| INVALID:semantic
- 23,Validity:   | VALID:3189168| NULL:117333                                                             
+ 0,Validity:    | VALID:5101231
+ 1,Validity:    | VALID:5100576| NULL:655
+ 2,Validity:    | VALID:5101183| NULL:48
+ 3,Validity:    | VALID:3709753| NULL:1391478
+ 4,Validity:    | VALID:3713446| NULL:1387785
+ 5,Validity:    | VALID:5101231
+ 6,Validity:    | VALID:5101231
+ 7,Validity:    | VALID:5082391| NULL:18840
+ 8,Validity:    | VALID:5096657| NULL:4574
+ 9,Validity:    | VALID:5096657| NULL:4574
+ 10,Validity:   | VALID:5101224| NULL:7
+ 11,Validity:   | VALID:5101231
+ 12,Validity:   | VALID:5101231
+ 13,Validity:   | VALID:5100768| NULL:463
+ 14,Validity:   | VALID:5100841| NULL:390
+ 15,Validity:   | VALID:3974103| NULL:1127128
+ 16,Validity:   | VALID:5067952| NULL:33279
+ 17,Validity:   | VALID:7599| NULL:5093632
+ 18,Validity:   | VALID:253205| NULL:4848026
+ 19,Validity:   | VALID:4913085| NULL:188146
+ 20,Validity:   | VALID:4913085| NULL:188146
+ 21,Validity:   | VALID:4913085| NULL:188146| INVALID:semantic
+ 22,Validity:   | VALID:4913085| NULL:188146| INVALID:semantic
+ 23,Validity:   | VALID:4913085| NULL:188146                    
 ```
 
 Thanks!
