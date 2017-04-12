@@ -10,7 +10,7 @@ Check the following potential data issues:
 A. Output records with the following suspicious dates values for manual review:
     1. CMPLNT_TO_DT < CMPLNT_FR_DT
     2. RPT_DT < CMPLNT_FR_DT
-    3. CMPLNT_FR_DT empty and CMPLNT_TO_DT not empty
+    3. CMPLNT_FR_DT empty
     4. CMPLNT_TO_DT - CMPLNT_FR_DT more than 5 days
     5. RPT_DT - CMPLNT_FR_DT more than 5 days
 
@@ -39,9 +39,9 @@ def parseData(line):
         entry.extend(item)
     try:
         entry[0] = int(entry[0]) # remove header
-        # Remove longitude-lattitude for now
+        # Remove x-y cord, longitude-lattitude for now
         if len(entry) == 24:
-            return entry[0:21]
+            return entry[0:19]
     except:
         pass
 
@@ -54,29 +54,35 @@ def removeNone(entry):
 
 def compareDate(cfd, ctd, rd):
     rule = [False]*5
+    days_f2t = ''
+    days_f2r = ''
     
-    if (cfd == '') & (ctd != ''):
+    
+    if (cfd == '') :
         rule[2] = True
     
     elif cfd != '':
         cfd2 = dt.strptime(cfd, "%m/%d/%Y")
         if ctd != '':
             ctd2 = dt.strptime(ctd, "%m/%d/%Y")
-            if ctd2 < cfd2:
+            days_f2t = (ctd2 - cfd2).days
+            if days_f2t < 0:
                 rule[0] = True
-            if (ctd2 - cfd2).days > 5:
+            if days_f2t > 5:
                 rule[3] = True
         if rd != '':
             rd2 = dt.strptime(rd, "%m/%d/%Y")
-            if rd2 < cfd2:
+            days_f2r = (rd2 - cfd2).days
+            if days_f2r < 0:
                 rule[1] = True
-            if (rd2 - cfd2).days > 5:
+            if days_f2r > 5:
                 rule[4] = True
-    return rule
+    return rule, days_f2t, days_f2r
 
 def addRules(entry):
-    rule = compareDate(entry[1], entry[3], entry[5])
+    rule, days_f2t, days_f2r = compareDate(entry[1], entry[3], entry[5])
     entry.extend(rule)
+    entry.extend([days_f2t, days_f2r])
     return entry
 
 
@@ -100,29 +106,30 @@ if __name__ == '__main__':
     lines = lines.map(lambda x: parseData(x)).filter(lambda x: removeNone(x))
     
     # A: Output records with suspicious dates values
-    lines_out = lines.map(lambda x: addRules(x)).filter(lambda x: any(x[-5:]))
+    lines_out = lines.map(lambda x: addRules(x)).filter(lambda x: any(x[-7:-2]))
     lines_out = lines_out.map(lambda x: '\t'.join([str(i) for i in x]))
-    lines_out.saveAsTextFile('crime_dataCheck.out')
+    lines_out.saveAsTextFile('/user/jl7722/crime_dataCheck.out')
     print 'Date check finished'
     
-    
     # B: Daily number of crimes
-    cntByDay = lines.map(lambda x: countByDay(x)).reduceByKey(lambda x,y: x+y).sortBy(lambda x: x[1], False).take(10)
-    sc.parallelize(cntByDay).saveAsTextFile('cntByDay.out')
+    cntByDay = lines.map(lambda x: countByDay(x)).reduceByKey(lambda x,y: x+y).sortBy(lambda x: x[1], False).take(100)
+    sc.parallelize(cntByDay).saveAsTextFile('/user/jl7722/cntByDay.out')
     print 'Daily number calculated'
     
     # C: Cross-tab of KY_CD and PD_CD
     KYPD = lines.map(lambda x: keyPair(x, 6, 8, '\t')).reduceByKey(lambda x,y: x+y, 2).collect()
     KYPD = sc.parallelize(KYPD).map(lambda x: parseKeyPair(x, '\t')).sortBy(lambda x: (x[0], -x[2]))
-    KYPD.map(lambda x: '\t'.join([str(i) for i in x])).saveAsTextFile('KYPD_tab.out')
+    KYPD.map(lambda x: '\t'.join([str(i) for i in x])).saveAsTextFile('/user/jl7722/KYPD_tab.out')
     print 'KYPD generated'
     
     # D: Cross-tab of KY_CD and OFNS_DESC
     KYDesp = lines.map(lambda x: keyPair(x, 6, 7, '\t')).reduceByKey(lambda x,y: x+y, 2).collect()
     KYDesp = sc.parallelize(KYDesp).map(lambda x: parseKeyPair(x, '\t')).sortBy(lambda x: (x[0], -x[2]))
-    KYDesp.map(lambda x: '\t'.join([str(i) for i in x])).saveAsTextFile('KYDesp_tab.out')
+    KYDesp.map(lambda x: '\t'.join([str(i) for i in x])).saveAsTextFile('/user/jl7722/KYDesp_tab.out')
     print 'KYDesp generated'
     
+    # E: Cross-tab of PD_CD and 
+   
    
     sc.stop()
     
