@@ -334,7 +334,7 @@ def print_valids(desc, mapper):
 
 def check_semantic(value, inindex):
   index = str(inindex)
-  found_newsemantic = ""
+  found_newsemantic = []
   if index not in semantic:
     semantic[index] = {}
 
@@ -344,19 +344,19 @@ def check_semantic(value, inindex):
       cvalue = value.lower()
     match = regex_semantics[k].search(cvalue)
     if match:
-      found_newsemantic = v
+      found_newsemantic.append(v)
       if v not in semantic[index]:
         semantic[index][v] = 0
       semantic[index][v] += 1
 
   addstate = list(k for (k,v) in states.iteritems() if value.upper()==k.upper() or value.upper()==v.upper())
   if len(addstate) >= 1:
-    found_newsemantic = STATE
+    found_newsemantic.append(STATE)
     if STATE not in semantic[index]:
       semantic[index][STATE] = 0
     semantic[index][STATE] += 1
 
-  ret_semantic = found_newsemantic 
+  ret_semantic = ",".join(found_newsemantic)
   return (ret_semantic)
     
 
@@ -455,6 +455,7 @@ def check_col8(value, len_itr):
   str += ("|pickup %s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
   str += ("|%s") % (check_valid(value, len_itr))
+  str += "|"
   return str
 
 
@@ -465,6 +466,7 @@ def check_col9(value, len_itr):
   str += ("|pickup %s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
   str += ("|%s") % (check_valid(value, len_itr))
+  str += "|"
   return str
 
 
@@ -474,6 +476,7 @@ def check_col10(value, len_itr):
   str += ("|pickup %s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
   str += ("|%s") % (check_valid(value, len_itr))
+  str += "|"
   return str
 
 
@@ -483,6 +486,7 @@ def check_col11(value, len_itr):
   str += ("|pickup %s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
   str += ("|%s") % (check_valid(value, len_itr))
+  str += "|"
   return str
 
 
@@ -558,6 +562,7 @@ def check_col18(value, len_itr):
   str += ("|pickup %s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
   str += ("|%s") % (check_valid(value, len_itr))
+  str += "|"
   return str
 
 
@@ -568,6 +573,7 @@ def check_col19(value, len_itr):
   str += ("|pickup %s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
   str += ("|%s") % (check_valid(value, len_itr))
+  str += "|"
   return str
 
 
@@ -578,6 +584,7 @@ def check_col20(value, len_itr):
   str += ("|pickup %s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
   str += ("|%s") % (check_valid(value, len_itr))
+  str += "|"
   return str
 
 
@@ -588,6 +595,7 @@ def check_col21(value, len_itr):
   str += ("|pickup %s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
   str += ("|%s") % (check_valid(value, len_itr))
+  str += "|"
   return str
 
 
@@ -598,6 +606,7 @@ def check_col22(value, len_itr):
   str += ("|pickup %s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
   str += ("|%s") % (check_valid(value, len_itr))
+  str += "|"
   return str
 
 
@@ -608,6 +617,7 @@ def check_col23(value, len_itr):
   str += ("|pickup %s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
   str += ("|%s") % (check_valid(value, len_itr))
+  str += "|"
   return str
 
 
@@ -679,7 +689,7 @@ def parsedata(txt):
       str += check_col22(value, len_itr)
     if len_itr == 23:
       str += check_col23(value, len_itr)
-  print str
+  print str[:-1]
 
 
 
