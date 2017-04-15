@@ -147,8 +147,9 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
        * rule 1 = if date field is < 1957
        * rule 2 = if from date > to date (indicates crime completed before the crime was committed)
        * rule 3 = if from date > report date (indicates crime reported before the crime was committed)
-       Example:  The example below shows rule(1), rule(2) indicating that column 1 also contained values 
-       that violated rule 1 and 2.  
+       Example:  The example below shows rule(1), rule(2) indicating that column 1 contains values 
+       which violate rule 1 and 2.  If multiple rule violations are identified for this field, they are 
+       denoted by rule(#,#,..).  
     
   Note:  If no data is available, then the field is omitted. 
   
@@ -203,8 +204,9 @@ Individual Output File:   ./src/srcvalue_output
           * rule 1 = if date field is < 1957
           * rule 2 = if from date > to date (indicates crime completed before the crime was committed)
           * rule 3 = if from date > report date (indicates crime reported before the crime was committed)
-          Example:  The example below shows rule(1), rule(2) indicating that column 1 also contained values 
-          that violated rule 1 and 2.  
+          Example:  The example below shows rule(1), rule(2) indicating that column 1 contains values 
+          which violate rule 1 and 2.  If multiple rule violations are identified for this field, they are 
+          denoted by rule(#,#,..).  
     
     The format:
     value | datatype | semantic | validity | <repeat these 4 properties for other columns ...>
