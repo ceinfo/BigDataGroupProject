@@ -1,6 +1,8 @@
 # BigData-Project1
 Our project analyzes NYC Crime Data from 2006 - 2015.  The source code available in this repository provides the following:
   * Map and Reduce scripts for Hadoop execution of your choice of individual or summary data
+      * Individual Data - provides granualar details about a specific value found in the datatset.  We identify the value, datatype, semantic, and validity for values found at the column and row level
+      * Summary Data - provides the general dataype, semantic and validity details at the column level
   * Scripts to execute the individual or summary map/reduce jobs, consolidate the output, and general environment cleanup
   * Sample outputs of the datatype, semantic, and validity analysis 
   
