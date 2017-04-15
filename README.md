@@ -1,8 +1,8 @@
 # BigData-Project1
 Our project analyzes NYC Crime Data from 2006 - 2015.  The source code available in this repository provides the following:
-  - Map and Reduce scripts for Hadoop execution
-  - Script to execute the map/reduce jobs, consolidate the output, and general environment cleanup
-  - Sample output of the datatype, semantic, and validity analysis
+  * Map and Reduce scripts for Hadoop execution for individual or summary data
+  * Scripts to execute the individual or summary map/reduce jobs, consolidate the output, and general environment cleanup
+  * Sample outputs of the datatype, semantic, and validity analysis 
   
 
 
@@ -15,30 +15,49 @@ These instructions will get you setup and running with the project on your local
   
 2) Download the code from this repository and place onto Hadoop cluster (ex:  dumbo)
 
-3) Execute the Map/Reduce scripts by running any 3 possible commands below:
-```
-     a) ./test.sh NYPD_Complaint_Data_Historic.csv        (analyzes all columns)
-     b) ./test.sh NYPD_Complaint_Data_Historic.csv #      (analyzes specific column # given; # range begins from 0)
-     c) ./test.sh NYPD_Complaint_Data_Historic.csv #,#,#  (analyzes only columns specified)
-```
+3) Execute the Map/Reduce scripts by running the summary (test.sh) or individual (testvalue.sh) script below.  There are 3 possible options for running each script.
 
-4) View ./src/output
+| Script Type            | Command        |  Description      |
+| ---------------------- | ----------------------- | ------------------------------ |
+| Summary Script  |        |          |
+| 1  | ./test.sh NYPD_Complaint_Data_Historic.csv         | analyzes all columns          |
+| 2  | ./test.sh NYPD_Complaint_Data_Historic.csv #   | analyzes specific column # given; # range begins from 0    |
+| 3  | ./test.sh NYPD_Complaint_Data_Historic.csv #,#,#    | analyzes only columns specified    |
+| Individual Script |         |           |
+| 1  | ./testvalue.sh NYPD_Complaint_Data_Historic.csv         | analyzes all columns          |
+| 2  | ./testvalue.sh NYPD_Complaint_Data_Historic.csv #   | analyzes specific column # given; # range begins from 0    |
+| 3  | ./testvalue.sh NYPD_Complaint_Data_Historic.csv #,#,#    | analyzes only columns specified    |
 
+
+4) The output can be found in the src directory below:
+
+| Description            | All Columns             |  Specific Columns (1,2,3)      |
+| ---------------------- |:-----------------------:|:------------------------------:|
+| Summary data           | ./src/src_output        | ./src/src1,2,3_output          |
+| Individual value data  | ./src/srcvalue_output   | ./src/srcvalue1,2,3_output     |
+
+
+
+    
 
 ## Directory Structure
 ```
-  test.sh   (script to execute the Hadoop jobs)
+  test.sh        (Summary - script to execute the Hadoop jobs)
+  testvalue.sh   (Individual - script to execute the Hadoop jobs)
   src       (src and output directory)
-  |_____ map.py     (map job)
-  |_____ reduce.py  (reduce job)
-  |_____ srctmp.out (intermediary hadoop output file, ignored)
-  |_____ output     (consolidated output file)
+  |_____ map.py          (Summary - map job)
+  |_____ reduce.py       (Summary - reduce job)
+  |_____ mapvalue.py     (Indvidual - map job)
+  |_____ reducevalue.py  (Individual - reduce job)
+  |_____ srctmp.out      (Intermediary hadoop output file, ignored)
+  |_____ src_output      (Summary - consolidated output file)
+  |_____ srcvalue_output (Individual - consolidated output file)
        
 ```
 
 
-## Sample Output
-Output file:   ./src/output
+##  Sample 1:  Sample Output for Summary Data
+Output file:   ./src/src_output (summary) 
 
 There are 3 sections of the output file (Datatypes, Semantics, and Validity):
 
@@ -121,7 +140,11 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
   Analysis on the validity of the data.  The fields represented:
     - VALID:count - the number of valid records
     - NULL:count - the number of empty string records
-    - INVALID:datatype,semantic - if there are inconsistencies and multiple datatypes/semantics are found
+    - INVALID:datatype,semantic,rule(#), rule(#,#) - if multiple datatypes/semantics are found or rule violations for this column
+       * rule 1 = if date field is < 1957
+       * rule 2 = if from date > to date (indicates crime occurred before the start date)
+       * rule 3 = if from date > report date (indicates crime occurred before the reported date)
+       Example:  The example below shows rule(1,2) indicating that column 1 also contained values that violated rule 1 and 2.  
     
   Note:  If no data is available, then the field is omitted. 
   
@@ -130,11 +153,11 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
 ```
 ```
  0,Validity:    | VALID:5101231
- 1,Validity:    | VALID:5100576| NULL:655
+ 1,Validity:    | VALID:3709137| NULL:655| INVALID:rule(1),rule(1,2),rule(2),rule(3)
  2,Validity:    | VALID:5101183| NULL:48
- 3,Validity:    | VALID:3709753| NULL:1391478
+ 3,Validity:    | VALID:3709719| NULL:1391478| INVALID:rule(1),rule(2)
  4,Validity:    | VALID:3713446| NULL:1387785
- 5,Validity:    | VALID:5101231
+ 5,Validity:    | VALID:5101229| INVALID:rule(3)
  6,Validity:    | VALID:5101231
  7,Validity:    | VALID:5082391| NULL:18840
  8,Validity:    | VALID:5096657| NULL:4574
@@ -152,7 +175,7 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
  20,Validity:   | VALID:4913085| NULL:188146
  21,Validity:   | VALID:4913085| NULL:188146| INVALID:semantic
  22,Validity:   | VALID:4913085| NULL:188146| INVALID:semantic
- 23,Validity:   | VALID:4913085| NULL:188146                    
+ 23,Validity:   | VALID:4913085| NULL:188146
 ```
 
 Thanks!
