@@ -40,6 +40,7 @@ VALUE = "value"
 NULL = "null"
 VALID = "valid"
 INVALID = "invalid"
+INVALID_SUM = "invalid_sum"
 
 
 date_formats = {
@@ -237,13 +238,18 @@ def redo_valid():
         valid[k].update( {INVALID:  valid[k][INVALID] + ["semantic"]} )
 
   for k, v in valid.items():
+    total = 0
     for k1, v1 in v.items():
       if INVALID in k1 and len(k1) > 7:
+        total += v1
         newkey = "rule" + k1[7:]
         if INVALID not in valid[k]:
           valid[k][INVALID] = [newkey]
         else:
           valid[k].update( {INVALID:  valid[k][INVALID] + [newkey]} )
+    if total > 0:
+      valid[k][INVALID_SUM] = total
+      
 
 
 
@@ -311,6 +317,8 @@ def print_valids(desc, mapper):
       stra += "| NULL:" + str(tempdesc[NULL])
     if INVALID in tempdesc:
       stra += "| INVALID:" + ",".join(sorted(tempdesc[INVALID]))
+    if INVALID_SUM in tempdesc:
+      stra += ":" + str(tempdesc[INVALID_SUM])
 
     print " %s,%s:\t%s" % (x, desc, stra)
 
