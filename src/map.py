@@ -20,6 +20,7 @@ valid = {}
 column_iterator = []
 found_regex = {}
 found_datetime = {}
+found_datetime_as_time = {}
 found_entry_list = []
 found_entry_len = 0
 
@@ -245,12 +246,28 @@ def check_valid(value, inindex, entry):
     rules_found = []
     fromd = ""
     try:
-      fromd = time.strptime(entry[1], "%m/%d/%Y")
-      tod = time.strptime(entry[3], "%m/%d/%Y")
+      if entry[1] in found_datetime_as_time:
+        fromd = found_datetime_as_time[entry[1]]
+      else:
+        found_datetime_as_time[entry[1]] = ""
+        fromd = time.strptime(entry[1], "%m/%d/%Y")
+        found_datetime_as_time[entry[1]] = fromd
+
+      if entry[3] in found_datetime_as_time:
+        tod = found_datetime_as_time[entry[3]]
+      else:
+        found_datetime_as_time[entry[3]] = ""
+        tod = time.strptime(entry[3], "%m/%d/%Y")
+        found_datetime_as_time[entry[3]] = tod
     except:
       tod = ""
     try:
-      reportd = time.strptime(entry[5], "%m/%d/%Y")
+      if entry[5] in found_datetime_as_time:
+        reportd = found_datetime_as_time[entry[5]]
+      else:
+        found_datetime_as_time[entry[5]] = ""
+        reportd = time.strptime(entry[5], "%m/%d/%Y")
+        found_datetime_as_time[entry[5]] = reportd
     except:
       reportd = ""
     # Invalid rules are tested on 3 conditions:
@@ -262,11 +279,11 @@ def check_valid(value, inindex, entry):
     if value[5] != "/" or value[-4:] < '1957':
       rules_found = ["1"]
     # Calculate rule 2.
-    if inindex == 1 or inindex == 3:
+    if (inindex == 1 and tod != "") or inindex == 3:
       if fromd > tod:
         rules_found.append("2")
-    # Calculate rule 3.
-    if inindex == 1 or inindex == 5:
+    # Calculate rule 3. 
+    if (inindex == 1 and reportd != "") or inindex == 5:
       if fromd > reportd:
         rules_found.append("3")
     # Append invalid + failed rule.
