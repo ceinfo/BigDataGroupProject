@@ -17,7 +17,7 @@ These instructions will get you setup and running with the project on your local
   
 2) Download the code from this repository and place onto Hadoop cluster (ex:  dumbo)
 
-3) Execute the Map/Reduce scripts by running the summary (test.sh) or individual (testvalue.sh) script below.  There are 3 possible options for running each script.
+3) Execute the Map/Reduce scripts by running the summary (test.sh) or individual (testvalue.sh) script below.  There are 3 possible options for running each script: 
 
 | Script Type            | Command        |  Description      |
 | ---------------------- | ----------------------- | ------------------------------ |
