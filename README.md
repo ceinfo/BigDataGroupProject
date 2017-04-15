@@ -143,7 +143,7 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
     - VALID:count - the number of valid records
     - NULL:count - the number of empty string records
     - INVALID:datatype,semantic,rule(#), rule(#,#) - if multiple datatypes/semantics are found or rule   
-      violations for this column
+      violations for this column.  Invalid counts sum only the rule violations found
        * rule 1 = if date field is < 1957
        * rule 2 = if from date > to date (indicates crime completed before the crime was committed)
        * rule 3 = if from date > report date (indicates crime reported before the crime was committed)
@@ -158,11 +158,11 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
 ```
 ```
  0,Validity:    | VALID:5101231
- 1,Validity:    | VALID:5100442| NULL:655| INVALID:rule(1),rule(2),rule(3)
+ 1,Validity:    | VALID:5100442| NULL:655| INVALID:rule(1),rule(2),rule(3):134
  2,Validity:    | VALID:5101183| NULL:48
- 3,Validity:    | VALID:3709719| NULL:1391478| INVALID:rule(1),rule(2)
+ 3,Validity:    | VALID:3709719| NULL:1391478| INVALID:rule(1),rule(2):34
  4,Validity:    | VALID:3713446| NULL:1387785
- 5,Validity:    | VALID:5101229| INVALID:rule(3)
+ 5,Validity:    | VALID:5101229| INVALID:rule(3):2
  6,Validity:    | VALID:5101231
  7,Validity:    | VALID:5082391| NULL:18840
  8,Validity:    | VALID:5096657| NULL:4574
@@ -181,6 +181,7 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
  21,Validity:   | VALID:4913085| NULL:188146| INVALID:semantic
  22,Validity:   | VALID:4913085| NULL:188146| INVALID:semantic
  23,Validity:   | VALID:4913085| NULL:188146
+
 ```
 
 
