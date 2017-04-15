@@ -142,8 +142,8 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
     - NULL:count - the number of empty string records
     - INVALID:datatype,semantic,rule(#), rule(#,#) - if multiple datatypes/semantics are found or rule violations for this column
        * rule 1 = if date field is < 1957
-       * rule 2 = if from date > to date (indicates crime occurred before the start date)
-       * rule 3 = if from date > report date (indicates crime occurred before the reported date)
+       * rule 2 = if from date > to date (indicates crime completed before the start date)
+       * rule 3 = if from date > report date (indicates crime reported before the start date)
        Example:  The example below shows rule(1), rule(2) indicating that column 1 also contained values that violated rule 1 and 2.  
     
   Note:  If no data is available, then the field is omitted. 
@@ -197,8 +197,8 @@ Individual Output File:   ./src/srcvalue_output
        null:    when the value is found to be empty string or 0
        invalid: when the value violates one of the 3 rules below: 
           * rule 1 = if date field is < 1957
-          * rule 2 = if from date > to date (indicates crime occurred before the start date)
-          * rule 3 = if from date > report date (indicates crime occurred before the reported date)
+          * rule 2 = if from date > to date (indicates crime completed before the start date)
+          * rule 3 = if from date > report date (indicates crime reported before the start date)
           Example:  The example below shows rule(1), rule(2) indicating that column 1 also contained values that violated rule 1 and 2.  
     
     The format:
