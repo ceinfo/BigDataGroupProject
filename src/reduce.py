@@ -236,6 +236,15 @@ def redo_valid():
       else: 
         valid[k].update( {INVALID:  valid[k][INVALID] + ["semantic"]} )
 
+  for k, v in valid.items():
+    for k1, v1 in v.items():
+      if INVALID in k1 and len(k1) > 7:
+        newkey = "rule" + k1[7:]
+        if INVALID not in valid[k]:
+          valid[k][INVALID] = [newkey]
+        else:
+          valid[k].update( {INVALID:  valid[k][INVALID] + [newkey]} )
+
 
 
 def valid_append_data():

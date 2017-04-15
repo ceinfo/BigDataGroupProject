@@ -11,6 +11,7 @@ import operator
 import os
 import re
 import sys
+import time
 from collections import OrderedDict
 from datetime import datetime
 
@@ -265,7 +266,7 @@ def check_datatype(value, inindex):
 
 
 
-def check_valid(value, inindex):
+def check_valid(value, inindex, entry):
   index = str(inindex)
   if index not in valid:
     valid[index] = {}
@@ -277,9 +278,42 @@ def check_valid(value, inindex):
   elif value == 0:
     #atype = ZERO
     atype = NULL
-  else:
-    #atype = VALUE
+  elif inindex in [1,3,5]:
+    rules_found = []
+    fromd = ""
+    try:
+      fromd = time.strptime(entry[1], "%m/%d/%Y")
+      tod = time.strptime(entry[3], "%m/%d/%Y")
+    except:
+      tod = ""
+    try:
+      reportd = time.strptime(entry[5], "%m/%d/%Y")
+    except:
+      reportd = ""
+    # Invalid rules are tested on 3 conditions:
+    # 1 - when date < 1957
+    # 2 - when from date > to date
+    # 3 - when from date > report date
+
+    # Calculate rule 1.
+    if value[5] != "/" or value[-4:] < '1957':
+      rules_found = ["1"]
+    # Calculate rule 2.
+    if inindex == 1 or inindex == 3:
+      if fromd > tod:
+        rules_found.append("2")
+    # Calculate rule 3.
+    if inindex == 1 or inindex == 5:
+      if fromd > reportd:
+        rules_found.append("3")
+    # Append invalid + failed rule.
+    if len(rules_found) > 0:
+      atype = INVALID + "(" + ",".join(rules_found) + ")"
+
+  # If no errors, then valid.
+  if atype == "":
     atype = VALID
+
   if atype not in valid[index]:
     valid[index][atype] = 0
   valid[index][atype] += 1
@@ -361,262 +395,262 @@ def check_semantic(value, inindex):
     
 
 
-def check_col0(value, len_itr):
+def check_col0(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str 
 
 
 
-def check_col1(value, len_itr):
+def check_col1(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str 
   
 
 
-def check_col2(value, len_itr):
+def check_col2(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col3(value, len_itr):
+def check_col3(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col4(value, len_itr):
+def check_col4(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col5(value, len_itr):
+def check_col5(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col6(value, len_itr):
+def check_col6(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col7(value, len_itr):
+def check_col7(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col8(value, len_itr):
+def check_col8(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col9(value, len_itr):
+def check_col9(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
-def check_col10(value, len_itr):
+def check_col10(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
-def check_col11(value, len_itr):
+def check_col11(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
-  str += "|"
-  return str
-
-
-
-def check_col12(value, len_itr):
-  str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
-  str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col13(value, len_itr):
+def check_col12(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col14(value, len_itr):
+def check_col13(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col15(value, len_itr):
+def check_col14(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
-  str += "|"
-  return str
-
-
-def check_col16(value, len_itr):
-  str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
-  str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col17(value, len_itr):
+def check_col15(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
+  str += "|"
+  return str
+
+
+def check_col16(value, len_itr, entry):
+  str = ""
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
+  str += ("|%s") % (check_semantic(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col18(value, len_itr):
+def check_col17(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col19(value, len_itr):
+def check_col18(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col20(value, len_itr):
+def check_col19(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col21(value, len_itr):
+def check_col20(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col22(value, len_itr):
+def check_col21(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
 
 
-def check_col23(value, len_itr):
+def check_col22(value, len_itr, entry):
   str = ""
-  str += ("%s|%s") % (value, expected_datatypes[len_itr])
-  str += ("|pickup %s") % (check_datatype(value, len_itr))
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
   str += ("|%s") % (check_semantic(value, len_itr))
-  str += ("|%s") % (check_valid(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
+  str += "|"
+  return str
+
+
+
+def check_col23(value, len_itr, entry):
+  str = ""
+  str += ("%s") % (value)
+  str += ("|%s") % (check_datatype(value, len_itr))
+  str += ("|%s") % (check_semantic(value, len_itr))
+  str += ("|%s") % (check_valid(value, len_itr, entry))
   str += "|"
   return str
 
@@ -642,53 +676,53 @@ def parsedata(txt):
     value = entry[len_itr]
 
     if len_itr == 0:
-      str += check_col0(value, len_itr)
+      str += check_col0(value, len_itr, entry)
     if len_itr == 1:
-      str += check_col1(value, len_itr)
+      str += check_col1(value, len_itr, entry)
     if len_itr == 2:
-      str += check_col2(value, len_itr)
+      str += check_col2(value, len_itr, entry)
     if len_itr == 3:
-      str += check_col3(value, len_itr)
+      str += check_col3(value, len_itr, entry)
     if len_itr == 4:
-      str += check_col4(value, len_itr)
+      str += check_col4(value, len_itr, entry)
     if len_itr == 5:
-      str += check_col5(value, len_itr)
+      str += check_col5(value, len_itr, entry)
     if len_itr == 6:
-      str += check_col6(value, len_itr)
+      str += check_col6(value, len_itr, entry)
     if len_itr == 7:
-      str += check_col7(value, len_itr)
+      str += check_col7(value, len_itr, entry)
     if len_itr == 8:
-      str += check_col8(value, len_itr)
+      str += check_col8(value, len_itr, entry)
     if len_itr == 9:
-      str += check_col9(value, len_itr)
+      str += check_col9(value, len_itr, entry)
     if len_itr == 10:
-      str += check_col10(value, len_itr)
+      str += check_col10(value, len_itr, entry)
     if len_itr == 11:
-      str += check_col11(value, len_itr)
+      str += check_col11(value, len_itr, entry)
     if len_itr == 12:
-      str += check_col12(value, len_itr)
+      str += check_col12(value, len_itr, entry)
     if len_itr == 13:
-      str += check_col13(value, len_itr)
+      str += check_col13(value, len_itr, entry)
     if len_itr == 14:
-      str += check_col14(value, len_itr)
+      str += check_col14(value, len_itr, entry)
     if len_itr == 15:
-      str += check_col15(value, len_itr)
+      str += check_col15(value, len_itr, entry)
     if len_itr == 16:
-      str += check_col16(value, len_itr)
+      str += check_col16(value, len_itr, entry)
     if len_itr == 17:
-      str += check_col17(value, len_itr)
+      str += check_col17(value, len_itr, entry)
     if len_itr == 18:
-      str += check_col18(value, len_itr)
+      str += check_col18(value, len_itr, entry)
     if len_itr == 19:
-      str += check_col19(value, len_itr)
+      str += check_col19(value, len_itr, entry)
     if len_itr == 20:
-      str += check_col20(value, len_itr)
+      str += check_col20(value, len_itr, entry)
     if len_itr == 21:
-      str += check_col21(value, len_itr)
+      str += check_col21(value, len_itr, entry)
     if len_itr == 22:
-      str += check_col22(value, len_itr)
+      str += check_col22(value, len_itr, entry)
     if len_itr == 23:
-      str += check_col23(value, len_itr)
+      str += check_col23(value, len_itr, entry)
   print str[:-1]
 
 

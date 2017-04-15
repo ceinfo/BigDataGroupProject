@@ -10,6 +10,7 @@ import csv
 import os
 import re
 import sys
+import time
 from collections import OrderedDict
 from datetime import datetime
 
@@ -228,7 +229,7 @@ def check_datatype(value, inindex):
 
 
 
-def check_valid(value, inindex):
+def check_valid(value, inindex, entry):
   index = str(inindex)
   if index not in valid:
     valid[index] = {}
@@ -240,9 +241,42 @@ def check_valid(value, inindex):
   elif value == 0:
     #atype = ZERO
     atype = NULL
-  else:
-    #atype = VALUE
+  elif inindex in [1,3,5]:
+    rules_found = []
+    fromd = ""
+    try:
+      fromd = time.strptime(entry[1], "%m/%d/%Y")
+      tod = time.strptime(entry[3], "%m/%d/%Y")
+    except:
+      tod = ""
+    try:
+      reportd = time.strptime(entry[5], "%m/%d/%Y")
+    except:
+      reportd = ""
+    # Invalid rules are tested on 3 conditions:
+    # 1 - when date < 1957
+    # 2 - when from date > to date
+    # 3 - when from date > report date
+
+    # Calculate rule 1.
+    if value[5] != "/" or value[-4:] < '1957':
+      rules_found = ["1"]
+    # Calculate rule 2.
+    if inindex == 1 or inindex == 3:
+      if fromd > tod:
+        rules_found.append("2")
+    # Calculate rule 3.
+    if inindex == 1 or inindex == 5:
+      if fromd > reportd:
+        rules_found.append("3")
+    # Append invalid + failed rule.
+    if len(rules_found) > 0:
+      atype = INVALID + "(" + ",".join(rules_found) + ")"
+
+  # If no errors, then valid.
+  if atype == "":
     atype = VALID
+
   if atype not in valid[index]:
     valid[index][atype] = 0
   valid[index][atype] += 1
@@ -297,8 +331,9 @@ def print_valids(desc, mapper):
    
     if NULL in tempdesc:
       stra += "| NULL:" + str(tempdesc[NULL])
-    if INVALID in tempdesc:
-      stra += "| INVALID:" + str(tempdesc[INVALID])
+    for key, value in tempdesc.items():
+       if INVALID in key:
+         stra += " |%s: %s" % (key, value)
     if VALID in tempdesc:
       stra += "| VALID:" + str(tempdesc[VALID])
   
@@ -349,7 +384,7 @@ def parsedata(txt):
     value = entry[len_itr]
     check_datatype(value, len_itr)
     check_semantic(value, len_itr)
-    check_valid(value, len_itr)
+    check_valid(value, len_itr, entry)
 
   ##valid_append_data()
 
