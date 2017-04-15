@@ -143,7 +143,7 @@ There are 3 sections of the output file (Datatypes, Semantics, and Validity):
     - VALID:count - the number of valid records
     - NULL:count - the number of empty string records
     - INVALID:datatype,semantic,rule(#), rule(#,#) - if multiple datatypes/semantics are found or rule   
-      violations for this column.  Invalid counts sum only the rule violations found
+      violations for this column.  Invalid counts sum the rule violations found
        * rule 1 = if date field is < 1957
        * rule 2 = if from date > to date (indicates crime completed before the crime was committed)
        * rule 3 = if from date > report date (indicates crime reported before the crime was committed)
