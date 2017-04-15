@@ -47,11 +47,11 @@
  22,Semantics:	([('latitude', 4913085), ('longitude', 4913085)])
  23,Semantics:	()
  0,Validity:	| VALID:5101231
- 1,Validity:	| VALID:5100442| NULL:655| INVALID:rule(1),rule(2),rule(3)
+ 1,Validity:	| VALID:5100442| NULL:655| INVALID:rule(1),rule(2),rule(3):134
  2,Validity:	| VALID:5101183| NULL:48
- 3,Validity:	| VALID:3709719| NULL:1391478| INVALID:rule(1),rule(2)
+ 3,Validity:	| VALID:3709719| NULL:1391478| INVALID:rule(1),rule(2):34
  4,Validity:	| VALID:3713446| NULL:1387785
- 5,Validity:	| VALID:5101229| INVALID:rule(3)
+ 5,Validity:	| VALID:5101229| INVALID:rule(3):2
  6,Validity:	| VALID:5101231
  7,Validity:	| VALID:5082391| NULL:18840
  8,Validity:	| VALID:5096657| NULL:4574
