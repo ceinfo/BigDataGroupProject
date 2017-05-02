@@ -1,7 +1,7 @@
 
 # Final Project - Part 2
 
-This portion of the project combines the NY Open Data Crime Dataset with the American Community Survey (ACS) demographic dataset.  Specifically,  we used the PUMA generated Neighborhood Tabulaton Area (NTA) data.  The American Community Survey (ACS) is a U.S. Cenus Bureau program that continually collects statistical data about the American population, housing, and workforce.  In our project, we focus on using the ACS data for the New York area.
+This portion of the project combines the NY Open Data Crime Dataset with the American Community Survey (ACS) demographic Dataset.  Specifically,  we used the PUMA generated Neighborhood Tabulaton Area (NTA) data.  The American Community Survey (ACS) is a U.S. Cenus Bureau program that continually collects statistical data about the American population, housing, and workforce.  In our project, we focus on using the ACS data for the New York area.
 
 
 ## 1- Generate the Demographic Data
@@ -61,7 +61,7 @@ In this section, each crime record is matched to its neighborhood NTACode and NT
 
    **Option 1) Run as Standalone**
 
-   When we first tried this, we created a Spark job running on an Amazon EMR cluster.  The Spark job was successful when run on small test datasets of the crime data,  however stalled (ex: still running after 40 mins with no data produced) on larger datasets even though optimizations to the Spark job had been added.  Running the Standalone turned out to be the better and quicker option for us.  
+   When we first tried this, we created a Spark job running on an Amazon EMR cluster.  The Spark job was successful when run on small test datasets of the crime data,  however stalled (ex: still running after 40 mins with no data produced) on larger datasets even after optimizations to the Spark job had been added.  Running the Standalone turned out to be the better and quicker option for us.  
 
    Note:  A small sample of the NYPD_Complaint_Data_Historic.csv has been uploaded in create_crime_data/ny.csv.  This can replace the NYPD_Complaint_Data_Historic.csv below in the commands if a quick test is desired. 
 ```
