@@ -10,7 +10,7 @@ In this section, we normalize the ACS dataset and generate the new output into "
 
 **1) General Informaton:**
 
-     1) Location:  part2-code/create_population_data
+     1) Location:  part2-code/create_demographic_data
      2) The Demographic_intermediary_csv.zip file is originally generated from the 
         Demographics_20and_20profiles_20at_20the_20Neighborhood_20Tabulation_20Area_20_NTA__20level.zip file. 
          * ACS Dataset Link:  https://data.cityofnewyork.us/City-Government/Demographic-Social-Economic-and-Housing-Profiles-b/kvuc-fg9b
@@ -20,8 +20,14 @@ In this section, we normalize the ACS dataset and generate the new output into "
 **2) Run Command:** 
 
 ```
-cd create_demographic_data
+https://github.com/lauraedelson/BigDataGroupProject.git runtest
+cd runtest/create_demographic_data
 unzip Demographic_intermediary_csv.zip
+./parsedata.py acs_select_econ_08to12_ntas.csv  > ce_acs_select_econ_08to12_ntas.csv
+./parsedata.py acs_demo_08to12_ntas.csv  > ce_acs_demo_08to12_ntas.csv
+./parsedata.py acs_socio_08to12_ntas.csv  > ce_acs_socio_08to12_ntas.csv
+./parsedata.py acs_select_housing_08to12_ntas.csv  > ce_acs_select_housing_08to12_ntas.csv
+
 ```
 
 **3) Dataset Modifies To:**
@@ -45,12 +51,22 @@ DATA|BK73|North Side-South Side|***HOUSEHOLD BY TYPE|19,172|8,691|3,628|5,161|2,
 In this section, each crime record is matched to its neighborhood NTACode and NTADescription (ex:  BK72, Williamsburg), then appended to the crime file.  There are two options to generate this data;  either a Spark or Standalone job can be run.  
 
 
+**1) General Informaton:**
 
-**Option 1) Run as Standalone**
+     1) Location:  part2-code/create_crime_data
 
-When we first tried this, we tried to create a Spark job running on an Amazon EMR cluster.  The Spark job was successful when run on small test datasets of the crime data,  however stalled on larger datasets even though optimizations to the Spark job had been added.  Running the Standalone turned out to be the better and quicker option for us.  
+
+**2) Run Command:**
+
+   **Option 1) Run as Standalone**
+
+   When we first tried this, we tried to create a Spark job running on an Amazon EMR cluster.  The Spark job was successful when run on small test datasets of the crime data,  however stalled on larger datasets even though optimizations to the Spark job had been added.  Running the Standalone turned out to be the better and quicker option for us.  
+
+   Note:  A small sample of the NYPD_Complaint_Data_Historic.csv has been uploaded in create_crime_data/ny.csv.  This can replace the NYPD_Complaint_Data_Historic.csv below in the commands if a quick test is desired. 
 ```
 cd create_crime_data
+pip install shapely
+cat NYPD_Complaint_Data_Historic.csv | python ./gencrime_alt.py NYPD_Complaint_Data_Historic.csv   #Can replace csv with ny.csv
 
 ```
 
@@ -59,9 +75,21 @@ cd create_crime_data
 This was too slow even when run on our Amazon EMR cluster even after optimizing our code!  So, eventually we converted the Spark job to a standalone job.
 ```
 cd create_crime_data
+pip install shapely
+hadoop fs -copyFromLocal NYPD_Complaint_Data_Historic.csv    #Can replace csv with ny.csv
+spark-submit gencrime.py NYPD_Complaint_Data_Historic.csv    #Can replace csv with ny.csv
 
 ```
 
+**3) Dataset Modifies To:**
+```
+Original Dataset:
+101109527,12/31/2015,23:45:00,,,12/31/2015,113,FORGERY,729,"FORGERY,ETC.,UNCLASSIFIED-FELO",COMPLETED,FELONY,N.Y. POLICE DEPT,BRONX,44,INSIDE,BAR/NIGHT CLUB,,,1007314,241257,40.828848333,-73.916661142,"(40.828848333, -73.916661142)"
+
+Modified Dataset:
+101109527,12/31/2015,23:45:00,,,12/31/2015,113,FORGERY,729,"FORGERY,ETC.,UNCLASSIFIED-FELO",COMPLETED,FELONY,N.Y. POLICE DEPT,BRONX,44,INSIDE,BAR/NIGHT CLUB,,,1007314,241257,40.828848333,-73.916661142,"(40.828848333, -73.916661142)",BX14,East Concourse-Concourse Village
+
+```
 
 Thanks! 
 
