@@ -10,11 +10,12 @@ In this section, we normalize the ACS dataset and generate the new output into "
 
 **1) General Informaton:**
 
-    1) Location:  part2-code/create_population_data
-    2) The Demographic_intermediary_csv.zip file is originally generated from the Demographics_20and_20profiles_20at_20the_20Neighborhood_20Tabulation_20Area_20_NTA__20level.zip file. 
-        * ACS Dataset Link:  https://data.cityofnewyork.us/City-Government/Demographic-Social-Economic-and-Housing-Profiles-b/kvuc-fg9b
-        * Save each xls file as a "Windows Comman Separated (.csv)"
-     
+     1) Location:  part2-code/create_population_data
+     2) The Demographic_intermediary_csv.zip file is originally generated from the 
+        Demographics_20and_20profiles_20at_20the_20Neighborhood_20Tabulation_20Area_20_NTA__20level.zip file. 
+         * ACS Dataset Link:  https://data.cityofnewyork.us/City-Government/Demographic-Social-Economic-and-Housing-Profiles-b/kvuc-fg9b
+         * Save each xls file as a "Windows Comman Separated (.csv)"
+
 
 **2) Run Command:** 
 
