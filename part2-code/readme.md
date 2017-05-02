@@ -1,7 +1,7 @@
 
 # Final Project - Part 2
 
-This portion of the project combines the NY Open Data Crime Dataset with the American Community Survey (ACS) demographic dataset.  Specifically,  we used the PUMA generated Neighborhood Tabulaton Area (NTA) data.  The American Community Survey (ACS) which is program run by the U.S. Cenus Bureau that collects continuing statistical data about American's population, housing, and workforce data.  In our project, we focus on the ACS data for the New York area.
+This portion of the project combines the NY Open Data Crime Dataset with the American Community Survey (ACS) demographic dataset.  Specifically,  we used the PUMA generated Neighborhood Tabulaton Area (NTA) data.  The American Community Survey (ACS) is a U.S. Cenus Bureau program that continually collects statistical data about the American population, housing, and workforce.  In our project, we focus on using the ACS data for the New York area.
 
 
 ## 1- Generate the Demographic Data
@@ -46,7 +46,7 @@ DATA|BK72|Williamsburg|***HOUSEHOLD BY TYPE|8,299|6,813|4,855|5,640|4,170|389|21
 ```
 
 ## 2- Add the Neighborhood Tabulation Area Dataset to the NY Crime Dataset
-In this section, each crime record is matched to its neighborhood NTACode and NTADescription (ex:  BK72, Williamsburg), then appended to the crime file.  There are two options to generate this data;  either a Spark or Standalone job can be run.  
+In this section, each crime record is matched to its neighborhood NTACode and NTADescription (ex:  BK72, Williamsburg).  Next, these values are appended to the crime file.  There are two options to generate this data;  either a Spark or Standalone job can be run.  
 
 
 **1) General Informaton:**
@@ -58,7 +58,7 @@ In this section, each crime record is matched to its neighborhood NTACode and NT
 
    **Option 1) Run as Standalone**
 
-   When we first tried this, we tried to create a Spark job running on an Amazon EMR cluster.  The Spark job was successful when run on small test datasets of the crime data,  however stalled on larger datasets even though optimizations to the Spark job had been added.  Running the Standalone turned out to be the better and quicker option for us.  
+   When we first tried this, we created a Spark job running on an Amazon EMR cluster.  The Spark job was successful when run on small test datasets of the crime data,  however stalled (ex: still running after 40 mins with no data produced) on larger datasets even though optimizations to the Spark job had been added.  Running the Standalone turned out to be the better and quicker option for us.  
 
    Note:  A small sample of the NYPD_Complaint_Data_Historic.csv has been uploaded in create_crime_data/ny.csv.  This can replace the NYPD_Complaint_Data_Historic.csv below in the commands if a quick test is desired. 
 ```
