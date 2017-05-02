@@ -52,6 +52,9 @@ In this section, each crime record is matched to its neighborhood NTACode and NT
 **1) General Informaton:**
 
      1) Location:  part2-code/create_crime_data
+     2) The NTAmap.geojson located in our repository contains the NYC Neighborhood Tabulation Areas.   
+       - NTA Link:  https://data.cityofnewyork.us/City-Government/NTA-map/d3qk-pfyz/data 
+       - Download as "GEOJSON"
 
 
 **2) Run Command:**
