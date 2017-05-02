@@ -15,7 +15,8 @@ In this section, we normalize the ACS dataset and generate the new output into "
         Demographics_20and_20profiles_20at_20the_20Neighborhood_20Tabulation_20Area_20_NTA__20level.zip file. 
          * ACS Dataset Link:  https://data.cityofnewyork.us/City-Government/Demographic-Social-Economic-and-Housing-Profiles-b/kvuc-fg9b
          * Save each xls file as a "Windows Comman Separated (.csv)"
-
+     3) See sample output files in:  create_demographic_data/cleaned_acs
+     
 
 **2) Run Command:** 
 
