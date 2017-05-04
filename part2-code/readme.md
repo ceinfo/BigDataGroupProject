@@ -8,13 +8,13 @@ This portion of the project combines the NY Open Data Crime Dataset with the Ame
 In this section, we normalize the ACS dataset and generate the new output into "ce_{filname}.csv" files.  These new output files are used to find interesting elements of the NY Crime Dataset.
 
 
-**1) General Informaton:**
+**1) General Information:**
 ```
 1) Location:  part2-code/create_demographic_data
 2) The Demographic_intermediary_csv.zip file is originally generated from the                
    Demographics_20and_20profiles_20at_20the_20Neighborhood_20Tabulation_20Area_20_NTA__20level.zip file. 
      * ACS Dataset Link:  https://data.cityofnewyork.us/City-Government/Demographic-Social-Economic-and-Housing-Profiles-b/kvuc-fg9b 
-     * Save each xls file as a "Windows Comman Separated (.csv)"
+     * Save each xls file as a "Windows Comma Separated (.csv)"
 3) See sample output files in:  create_demographic_data/cleaned_acs
 
 ```     
@@ -49,7 +49,7 @@ DATA|BK72|Williamsburg|***HOUSEHOLD BY TYPE|8,299|6,813|4,855|5,640|4,170|389|21
 In this section, each crime record is matched to its neighborhood NTACode and NTADescription (ex:  BK72, Williamsburg).  Next, these values are appended to the crime file.  There are two options to generate this data;  either a Spark or Standalone job can be run.  
 
 
-**1) General Informaton:**
+**1) General Information:**
 
      1) Location:  part2-code/create_crime_data
      2) The NTAmap.geojson located in our repository contains the NYC Neighborhood Tabulation Areas.   
