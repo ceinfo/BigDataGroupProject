@@ -68,6 +68,7 @@ In this section, each crime record is matched to its neighborhood NTACode and NT
 cd create_crime_data
 pip install shapely
 cat NYPD_Complaint_Data_Historic.csv | python ./gencrime_alt.py NYPD_Complaint_Data_Historic.csv   #Can replace csv with ny.csv
+vi new_NYPD_Complaint_Data_Historic.csv
 
 ```
 
@@ -79,6 +80,7 @@ cd create_crime_data
 pip install shapely
 hadoop fs -copyFromLocal NYPD_Complaint_Data_Historic.csv    #Can replace csv with ny.csv
 spark-submit gencrime.py NYPD_Complaint_Data_Historic.csv    #Can replace csv with ny.csv
+vi new_NYPD_Complaint_Data_Historic.csv
 
 ```
 
