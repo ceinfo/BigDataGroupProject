@@ -46,7 +46,7 @@ DATA|BK72|Williamsburg|***HOUSEHOLD BY TYPE|8,299|6,813|4,855|5,640|4,170|389|21
 ```
 
 ## 2- Add the Neighborhood Tabulation Area Dataset to the NY Crime Dataset
-In this section, each crime record is matched to its neighborhood NTACode and NTADescription (ex:  BK72, Williamsburg).  Next, these values are appended to the crime file.  There are two options to generate this data;  either a Spark or Standalone job can be run.  
+In this section, each crime record is matched to its neighborhood NTACode and NTADescription (ex:  BK72, Williamsburg).  Next, these values are appended to the crime file.  There are two options to generate this data;  either a Spark or Standalone job can be run.  The script generates a "new_{filename}" output file.
 
 
 **1) General Information:**
