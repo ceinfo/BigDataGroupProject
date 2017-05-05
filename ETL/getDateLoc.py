@@ -58,11 +58,11 @@ if __name__ == '__main__':
     #lines = sc.textFile(sys.argv[1], 1)
     df = spark.read.csv(sys.argv[1], sep = '\t', header = True, inferSchema = True, ignoreLeadingWhiteSpace = True, ignoreTrailingWhiteSpace = True)
     df = df.dropna(subset = ('RPT_DT', 'NTACODE'))
-    #df1 = df.groupby('RPT_DT').count()
+    df1 = df.groupby('RPT_DT').count()
     
 
     # Process the climate data
-    """
+    
     df2 = spark.read.csv(sys.argv[2], sep = ',', header = True, inferSchema = True,ignoreLeadingWhiteSpace = True, ignoreTrailingWhiteSpace = True)    
     df2 = df2.filter((df2.DATE >= 20060101) & (df2.DATE <= 20151231))
     formatDate_udf = udf(formatDate, StringType())
@@ -76,10 +76,9 @@ if __name__ == '__main__':
     df2 = df2.withColumn('weekday', weekday_udf(df2.DATE2))
     df2 = df2.withColumn('isWeekend', isWeekend_udf(df2.weekday))
     
-    
-    
     cond1 = [df1.RPT_DT == df2.DATE2]
-    df_date = df1.join(df2, cond1, 'right').drop('RPT_DT')
+    keep = [df1['count']] + [df2[c] for c in df2.columns]
+    df_date = df1.join(df2, cond1, 'right').select(*keep)
     df_date = df_date.fillna(0, subset = 'count')
     df_date.write.csv('dateCli_cnt.out', sep = '\t', header = True)
         
@@ -90,7 +89,7 @@ if __name__ == '__main__':
     np.savetxt('cor1.txt', cor, delimiter = '\t', header = "count\tPRCP\tSNWD\tSNOW\tTMAX\tTMIN\tAWND\tweekday\tisWeekend")
     
     # Add location
-    
+    """
     df1 = df.groupby('RPT_DT', 'NTACODE').count()
     df_loc = df1.select('NTACODE').dropDuplicates()
     df2 = df2.crossJoin(df_loc)
@@ -121,9 +120,13 @@ if __name__ == '__main__':
     df4 = df4.crossJoin(df_yr)
     
     cond3 = [df4.RPT_YR == df1.RPT_YR, df4.NTACODE == df1.NTACODE]
-    df_locYr = df4.join(df1, cond3, 'left').drop(df1['RPT_YR']).drop(df1['NTACODE'])
+    keep = [df1['count']] + [df4[c] for c in df4.columns]
+    
+    df_locYr = df4.join(df1, cond3, 'left').select(*keep)
     df_locYr = df_locYr.fillna(0, subset = 'count')
-    df_locYr = df_locYr.withColumn('COUNT_PERCAPITA', df_locYr.count *1.0 / df_locYr.POP_TOT)    
+    
+    getPerCap_udf = udf(lambda arr: arr[0]*1000.0 / (1e-8 + arr[1]), FloatType())
+    df_locYr = df_locYr.withColumn('COUNT_PER1K', getPerCap_udf(array('count','POP_TOT')))    
     
     df_cor2 = df_locYr.drop('NTACODE', 'NTANAME')
     lsCol = df_cor2.columns
