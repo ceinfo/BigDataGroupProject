@@ -55,6 +55,7 @@ In this section, each crime record is matched to its neighborhood NTACode and NT
      2) The NTAmap.geojson located in our repository contains the NYC Neighborhood Tabulation Areas.   
        - NTA Link:  https://data.cityofnewyork.us/City-Government/NTA-map/d3qk-pfyz/data 
        - Download as "GEOJSON"
+     3) Install shapely package (either "pip install shapely" or ". part2-code/create_crime_data/installshape.sh"
 
 
 **2) Run Command:**
@@ -66,7 +67,7 @@ In this section, each crime record is matched to its neighborhood NTACode and NT
    Note:  A small sample of the NYPD_Complaint_Data_Historic.csv has been uploaded in create_crime_data/ny.csv.  This can replace the NYPD_Complaint_Data_Historic.csv below in the commands if a quick test is desired. 
 ```
 cd create_crime_data
-pip install shapely
+pip install shapely     # or "./installshape.sh" if issues with installing shapely
 cat NYPD_Complaint_Data_Historic.csv | python ./gencrime_alt.py NYPD_Complaint_Data_Historic.csv   #Can replace csv with ny.csv
 vi new_NYPD_Complaint_Data_Historic.csv
 
@@ -77,7 +78,7 @@ vi new_NYPD_Complaint_Data_Historic.csv
 This was too slow even when run on our Amazon EMR cluster even after optimizing our code!  So, eventually we converted the Spark job to a standalone job.
 ```
 cd create_crime_data
-pip install shapely
+pip install shapely      # or "./installshape.sh" if issues with installing shapely
 hadoop fs -copyFromLocal NYPD_Complaint_Data_Historic.csv    #Can replace csv with ny.csv
 spark-submit gencrime.py NYPD_Complaint_Data_Historic.csv    #Can replace csv with ny.csv
 vi new_NYPD_Complaint_Data_Historic.csv
