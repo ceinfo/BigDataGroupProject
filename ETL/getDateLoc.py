@@ -80,8 +80,9 @@ if __name__ == '__main__':
     keep = [df1['count']] + [df2[c] for c in df2.columns]
     df_date = df1.join(df2, cond1, 'right').select(*keep)
     df_date = df_date.fillna(0, subset = 'count')
-    df_date.write.csv('dateCli_cnt.out', sep = '\t', header = True)
-        
+    df_date.repartition(1).write.csv('dateCli_cnt.out', sep = '\t', header = True)
+    """
+
     df_cor = df_date.drop('DATE2')
     
     df_cor = df_cor.rdd.map(lambda row : Vectors.dense([item for item in row]))
@@ -89,7 +90,6 @@ if __name__ == '__main__':
     np.savetxt('cor1.txt', cor, delimiter = '\t', header = "count\tPRCP\tSNWD\tSNOW\tTMAX\tTMIN\tAWND\tweekday\tisWeekend")
     
     # Add location
-    """
     df1 = df.groupby('RPT_DT', 'NTACODE').count()
     df_loc = df1.select('NTACODE').dropDuplicates()
     df2 = df2.crossJoin(df_loc)
@@ -105,7 +105,7 @@ if __name__ == '__main__':
     print 'Repartitioned'
 
     df3.write.csv('dateLocCli_cnt.out', sep = '\t', header = True)
-    """
+    
     
     # Year-location
     df4 = spark.read.csv('/tmp/newgrp/ce_acs_combined.csv', sep = '\t', header = True, inferSchema = True,ignoreLeadingWhiteSpace = True, ignoreTrailingWhiteSpace = True)    
@@ -136,6 +136,7 @@ if __name__ == '__main__':
     print 'Correlation output'
     
     df_locYr.repartition(1).write.csv('locYr_cnt.out', sep = '\t', header = True)
+    """
     sc.stop()
 
 
